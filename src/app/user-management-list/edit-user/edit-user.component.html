@@ -1,0 +1,69 @@
+<div
+  class="modal fade mt-2 mb-2"
+  [class.show]="isVisible"
+  [style.display]="isVisible ? 'block' : 'none'"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="max-height: 400px; overflow-y: auto;">
+      <div class="modal-header justify-content-center">
+        <h5
+          class="modal-title text-center"
+          style="font-size: 1.5rem; font-weight: bold; color: blue;"
+        >
+          {{ formTitle }}
+        </h5>
+      </div>
+
+      <div class="modal-body" dir="rtl">
+        <form [formGroup]="userForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">שם</label>
+            <input
+              type="text"
+              class="form-control border-primary"
+              id="name"
+              formControlName="name"
+            />
+          </div>
+              <div class="mb-3">
+                <label for="userName" class="form-label">שם משתשמש</label>
+                <input
+                  type="text"
+                  class="form-control border-primary"
+                  id="userName"
+                  formControlName="userName"
+                />
+              </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">אימיל</label>
+            <input
+              type="text"
+              class="form-control border-primary"
+              id="email"
+              formControlName="email"
+              required
+              [class.is-invalid]="
+                userForm.get('email')?.invalid && userForm.get('email')?.touched
+              "
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-secondary" (click)="close()">
+          <i class="bi bi-x-circle"></i> ביטול
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="save()"
+          [disabled]="!userForm.valid"
+        >
+          <i class="bi bi-check-circle"></i> שמור שינויים
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div dir="rtl" class="container mt-4">
+    <div class="card">
+      <div
+        class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+      >
+        <h2 class="mb-0">רשימת משתמשים</h2>
+        @defer(when !loading&& !error){
+        <button class="btn btn-light" (click)="addUser()">
+          <i class="bi bi-plus-lg"></i>
+          הוסף משתמש
+        </button>
+        }
+      </div>
+      <div class="card-body">
+        @if(loading){
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        } @if(error){
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+        }
+        <div class="table-responsive">
+          @if(!loading && !error){
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>מזהה</th>
+                <th>שם </th>
+                <th>שם משתמש</th>
+                <th>דוא"ל</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(user of users; track user){
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <div class="d-flex">
+                    <button class="btn btn-sm" (click)="editUser(user)">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm" (click)="deleteUser(user.id)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   <edit-user
+    [isVisible]="isVisible"
+    [user]="selectedUser"
+    [type]="formType"
+    (onClose)="close()"
+  ></edit-user> 
+  
